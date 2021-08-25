@@ -1,0 +1,9 @@
+{
+  "test_url": "https://portal.smileidentity.com/",
+  "test_lambda_url": "https://testapi.smileidentity.com/v1/",
+  "prod_url": "https://portal.smileidentity.com/",
+  "prod_lambda_url": "https://api.smileidentity.com/v1/",
+  "auth_token": "XI8dhliRB5sMJrEG3Hqyr1pvg0RIURNEpCTde65AUzPHo0au7EMYZqJWeu9Jkje1qlNgCPMPUF2gJVhCujOkYCbW2QSwHTEBwDwdr/K3gOq7gEfumiheIUI1MhbBO/Qdl3dLu9UtUKsnXEC9nXAmwIEydxSON88Kk/f/BkTvzpI=",
+  "partner_id": "100",
+  "version": "1.0.0"
+}
