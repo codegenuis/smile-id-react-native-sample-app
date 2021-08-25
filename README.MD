@@ -9,47 +9,53 @@ npm install rn-smile-id
 
 ## Android Setup
 1. In your root-level (project-level) Gradle file (build.gradle), add rules to include the Maven Central repository.
+<br/>
     buildscript {​    
-        repositories {        
-        mavenCentral() // add the maven central repository
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-          }
-   }
-}
+       &nbsp;&nbsp;&nbsp;&nbsp; repositories {        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mavenCentral() // add the maven central repository <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maven { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url 'https://oss.sonatype.org/content/repositories/snapshots/' <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 
 2. In your module (app-level) Gradle file (usually app/build.gradle), apply the Smile ID android plugin:
+    <br/>
     apply plugin: 'com.smileidentity.smile-id-android'
 
 3. Declare the Smile ID android SDK in your root level Gradle file (usually build.gradle).
-    dependencies {  
-classpath group: 'com.smileidentity', name: 'smile-id-android', version: '1.0.1'
-}
+<br/>
+dependencies {  <br/>
+   &nbsp;&nbsp;&nbsp;&nbsp; classpath group: 'com.smileidentity', name: 'smile-id-android', version: '1.0.1' <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;}
 
 4. Add the following permissions if they do not exist already
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+<br/>
+
+    `<uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />  
+    <uses-permission android:name="android.permission.INTERNET" />  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />  
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />`
 
 5. Add the following activities under the application tag
-     <!--id capture-->
-<activity android:name="com.smileid.smileidui.SIDIDCaptureActivity" />
-<!--selfie capture-->
+<br/>
+
+`<activity android:name="com.smileid.smileidui.SIDIDCaptureActivity" />
 <activity android:name="com.smileid.smileidui.SIDSelfieCaptureActivity" />
-<!--selfie review screen-->
-<activity android:name="com.smileid.smileidui.SIDReviewActivity" />
+<activity android:name="com.smileid.smileidui.SIDReviewActivity" />`
 
 ## ios setup
 The SDK only runs on 64 bit processors arm64 and x86_64 and does not support armv7 and i386. 
 
-Cocoapods
-Close your XCode if your project is open and from the terminal, navigate to the iOS folder in the react native and run  
-    pod install 
+### Cocoapods
+Close your XCode if your project is open and from the terminal, navigate to the iOS folder in the react native and run 
+<br /> 
+pod install 
 
 
+<br/><br/>
 ## Selfie And ID Capture
 <h3> Import the Library </h3>
 import RnSmileId from 'rn-smile-id';
@@ -57,27 +63,38 @@ import RnSmileId from 'rn-smile-id';
 <h3> Capture Selfie </h3>
 
 1. If you want the SDK to generate a tag for you then call the method with an empty string
+<br />
     const data = await RnSmileId.captureSelfie('');
 
 2. If you want the generate to use a custom tag send a string to the SDK with alphanumeric characters  with the exception of an underscore and no spacing in them.
+<br/>
     const data = await RnSmileId.captureSelfie(<STRING_TAG>);
 
 <h3>Get Results </h3>
  The selfie capture process is an asynchronous process and will return an error code and a tag once done. The result looks as the below
 
- const resultCode = data.SID_RESULT_CODE;
+ const resultCode = data.SID_RESULT_CODE;<br/>
  const resultTag = data.SID_RESULT_TAG;
 
  If the result code is -1 AND the tag is not null or empty then the selfie capture was successful.
 
- <h3>Submit Job </h3>
+
+<br/><br/>
+ ## Submit Job 
   const result = await RnSmileId.submitJob(
-                tag: string,
-                jobType: number,
-                isProduction: boolean,
-                partnerParams: object,//optional pass {} when not available
-                idInfo: object,//optional pass {} when not available
-                geoInfo: object//optional pass {} when not available
+      <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp; tag: string,
+                <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp; jobType: number,
+                <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp; isProduction: boolean,
+                <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp; partnerParams: object,//optional pass {} when not available
+                <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp; idInfo: object,//optional pass {} when not available
+                <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp; geoInfo: object//optional pass {} when not available
+               <br/>
               );
 
 <ul>
@@ -85,21 +102,25 @@ import RnSmileId from 'rn-smile-id';
     <li>jobType: required and must be a valid job type as listed on the products page on the left </li>
     <li>isProduction: required and is a boolean true or false. If false the jobs will be sent to sandbox if true jobs will be sent to production</li>
     <li>partnerParams: {
-        "job_id":<YOUR JOB ID: Autogenerated>,
-        "user_id":<YOUR USER ID: Autogenerated>,
+        "job_id": "unique id",
+        "user_id": "unique id",
     }
     </li>
-    <li>idInfo:  (optional) This is mandatory for document verification but is used as the case may be for job type Enhanced KYC + SmartSelfie. the object is described below
+    <li>idInfo:  (optional) This is mandatory for document verification but is used as the case may be for job type Enhanced KYC + SmartSelfie. the object is described below <br/>
     {
-        country: <country>,
-        id_type: <idType>,
-        id_number: <idNumber>,
-        first_name: <firstName>,
-        middle_name: <middleName>,
-        last_name: <lastName>,
-        email: <email>,
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp; country: "country",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;id_type: "idType",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;id_number: "idNumber",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;first_name: "firstName",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;middle_name: "middleName",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;last_name: "lastName",<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;email: "email",<br/>
     }
     </li>
-<ul>
-<h3>Get Results</h3>
-The method will return a result accessible in our example as result.result. This object is an object documented in the return value section of your chosen product type under the products section on the left the most important of these being the  result.ResultCode which shows the state and result from the job you have just run
+</ul>
+
+## Get Results
+
+The method will return a result accessible in our example as result.result. <br>
+This object is an object documented in the return value section of your chosen product type under the products section on the left the most important of these being the  result.<br/>ResultCode which shows the state and result from the job you have just run
